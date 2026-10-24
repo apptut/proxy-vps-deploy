@@ -1,0 +1,23 @@
+# Runtime output and credentials never belong in this repository
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+venv/
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+state.json
+proxy.yaml
+audit.json
+verification.json
+deployment.json
+*.log
+*.sock
+*.vless.txt
+*-qr.png
+outputs/
+private/
