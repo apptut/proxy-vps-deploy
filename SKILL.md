@@ -11,8 +11,8 @@ description: 通过 SSH 为 Debian 12 x86_64 VPS 部署 Reality、Hysteria2、An
 
 技能内路径相对于本文件。脚本仅需 Python 3.9+ 标准库、OpenSSH、curl；本地验证需要 Mihomo，自动识别 macOS Clash Verge 内核，也支持 `--core /path/to/mihomo`。
 
-1. 用 `scripts/deploy.py audit --host HOST --port PORT --user root` 检查目标。密码默认由隐藏终端输入；已有密钥使用 `--identity PATH`。Agent 已收到密码时，可通过受控子进程 stdin 配合 `--password-stdin`，不要将密码放在命令参数、终端回显、输出或持久文件里；不要让用户反复提供已给过的账号。
-2. 确认是兼容的新机后执行 `scripts/deploy.py deploy --host HOST --port PORT --user root`。部署请求本身已授权该范围，不另设重复审批。脚本安装固定版本并核对官方 SHA256，独立生成凭据，以低权限 systemd 服务运行三协议，配置防火墙，验证全新的 SSH 连接以及三种协议的 HTTPS 和出口 IP，再提交防火墙持久化。SSH root/密码/密钥登录设置保持原样。
+1. 用 `python3 scripts/deploy.py audit --host HOST --port PORT --user root` 检查目标。密码默认由隐藏终端输入；已有密钥使用 `--identity PATH`。Agent 已收到密码时，可通过受控子进程 stdin 配合 `--password-stdin`，不要将密码放在命令参数、终端回显、输出或持久文件里；不要让用户反复提供已给过的账号。
+2. 确认是兼容的新机后执行 `python3 scripts/deploy.py deploy --host HOST --port PORT --user root`。部署请求本身已授权该范围，不另设重复审批。脚本安装固定版本并核对官方 SHA256，独立生成凭据，以低权限 systemd 服务运行三协议，配置防火墙，验证全新的 SSH 连接以及三种协议的 HTTPS 和出口 IP，再提交防火墙持久化。SSH root/密码/密钥登录设置保持原样。
 3. 标准输出仅为摘要；`~/.config/proxy-vps-deploy/HOST-PORT/proxy.yaml` 是 JSON 格式的合法 YAML，含客户端凭据，权限 600。不要直接打印文件或远端 state.json。验证记录和备份不放进 skill。
 4. 用户要求加入本机 Clash Verge 时，通过应用的“订阅→新建→Local→选择文件”导入独立配置。保持已有配置，按用户要求启用；不要退出/重启 Clash。用运行时 API 或 UI 确认实际选中节点、DNS、规则已生效。该脚本不会擅自覆盖现有分流或切换用户当前配置。
 5. 本地独立内核验证只能证明各协议连通；启用后还需检查实际运行端口和浏览器资源。Google 首页有“页面显示但标签仍转圈”时，读取浏览器 Network 的耗时/失败请求，而非仅 curl 首页。
@@ -37,6 +37,6 @@ description: 通过 SSH 为 Debian 12 x86_64 VPS 部署 Reality、Hysteria2、An
 
 读取 [分享与账号隔离](references/sharing.md)。向 Clash 用户提供配置文件可保留 UDP 分流；单节点链接/二维码只包含该节点。不要公开现有凭据，不自动上传订阅服务或第三方二维码网站；不要分享 SSH、服务端私钥或 state.json。
 
-运行 `scripts/export_share.py proxy.yaml --output-dir PRIVATE_DIR` 可离线导出 Reality 链接和可选二维码。该操作**复用现有节点身份**，不创建独立用户；实际分享前优先为接收方配置独立 UUID/认证密码并验证。不要声称仅导出链接就能独立撤销对方。
+运行 `python3 scripts/export_share.py proxy.yaml --output-dir PRIVATE_DIR` 可离线导出 Reality 链接和可选二维码。该操作**复用现有节点身份**，不创建独立用户；实际分享前优先为接收方配置独立 UUID/认证密码并验证。不要声称仅导出链接就能独立撤销对方。
 
 版本选择、验证范围和来源见 [故障与恢复](references/operations.md)。
