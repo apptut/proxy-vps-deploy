@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proxy VPS 部署"
+  short_description: "通过 SSH 部署 Reality、Hysteria2、AnyTLS，配置防火墙并验证"
+  default_prompt: "使用 $proxy-vps-deploy，按我提供的 SSH 账号部署并验证代理及防火墙。"
